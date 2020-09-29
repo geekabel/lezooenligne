@@ -1,38 +1,17 @@
-.App {
-  text-align: center;
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Indie Flower', cursive;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.site {
+ min-height: 100vh;
+ margin-bottom: -140px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+footer, .minSite 
+{
+    height: 140px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.imgFB,.imgTwitter,.imgIST{
+    height: 45px;
 }
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cardStyle{
+   height: 100px; 
 }
