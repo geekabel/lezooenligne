@@ -59,12 +59,16 @@ class Application extends Component {
     //console.log(`Demande de ${idContinent}`);
     }
     
-    filterNotFoud = () => {
-    if(this.state.filtreFamille && this.state.filtreContinent){
-        console.log("je n'ai rien trouve comme filtre");
-    }  
-    }
-
+    // filterNotFoud = () => {
+    // if(this.state.filtreFamille && this.state.filtreContinent){
+    //     console.log("je n'ai rien trouve comme filtre");
+    // }  
+    // }
+    // gerer mon event 
+    // handleChange(event){
+    //     //this.setState({})
+    //     this.handleSelectionContinent(event.target.value)
+    // }
 
 
 
