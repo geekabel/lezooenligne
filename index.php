@@ -7,10 +7,12 @@ define("URL", str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? "https" :
 require_once "controllers/front/API.controller.php";
 require_once "controllers/back/admin.Controller.php";
 require_once "controllers/back/familles.Controller.php";
+require_once "controllers/back/animaux.Controller.php";
 
 $apiController = new APIController();
 $adminController = new AdminController();
 $famillesController = new FamillesController();
+$animauxController = new AnimauxController();
 
 
 try {
@@ -52,35 +54,59 @@ try {
                         $adminController->getPageLogin();
                         //echo "page back end demandée";
                         break;
-                        case "connexion":
-                           $adminController->connexion(); 
+                    case "connexion":
+                        $adminController->connexion();
                         break;
-                        case "admin":
-                            $adminController->getAccueilAdmin(); 
-                         break;
-                         case "deconnexion":
-                            $adminController->deconnexion(); 
-                         break;
-                         case "familles":
-                            switch ($url[2]){
-                                case "visualisation" :
-                                  $famillesController->visualisation();
-                                 break; 
-                                 case "validationSuppression":
-                                    $famillesController->suppression();
-                                 break;
-                                 case "validationModification":
-                                    $famillesController->modification();
-                                 break;
-                                 case "creation" :
-                                    $famillesController->createTemplate();
-                                 break;
-                                  case "creationValidation":
-                                    $famillesController->creationFamilles();
-                                    break;
+                    case "admin":
+                        $adminController->getAccueilAdmin();
+                        break;
+                    case "deconnexion":
+                        $adminController->deconnexion();
+                        break;
+                    case "familles":
+                        switch ($url[2]) {
+                            case "visualisation":
+                                $famillesController->visualisation();
+                                break;
+                            case "validationSuppression":
+                                $famillesController->suppression();
+                                break;
+                            case "validationModification":
+                                $famillesController->modification();
+                                break;
+                            case "creation":
+                                $famillesController->createTemplate();
+                                break;
+                            case "creationValidation":
+                                $famillesController->creationFamilles();
+                                break;
                             default:
-                                 throw new Exception("La page n'existe pas here ");
-                            }
+                                throw new Exception("La page n'existe pas here ");
+                        }
+                        break;
+                    case "animaux":
+                        switch ($url[2]) {
+                            case "visualisation":
+                                $animauxController->visualisation();
+                                break;
+                            case "validationSuppression":
+                                $animauxController->suppression();
+                                break;
+                            case "creation":
+                                $animauxController->creation();
+                                break;
+                            case "creationValidation":
+                                $animauxController->creationValidation();
+                                break;
+                            case "modification":
+                                $animauxController->modification($url[3]);
+                                break;
+                            case "modificationValidation":
+                                $animauxController->modificationValidation();
+                                break;
+                            default:
+                                throw new Exception("La page n'existe pas here ");
+                        }
                         break;
                     default:
                         throw new Exception("La page n'existe pas");
@@ -94,7 +120,7 @@ try {
     $msg = $e->getMessage();
     echo $msg;
 
-    echo "<a href='".URL."back/login'>login</a>";
+    echo "<a href='" . URL . "back/login'>login</a>";
 }
 //routage pour eviter les appel **?page=1**
 //creer le chemin absolu permettant d'acceder au differents pages
