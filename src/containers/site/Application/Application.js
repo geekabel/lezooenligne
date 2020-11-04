@@ -60,7 +60,7 @@ class Application extends Component {
     }
     
     // filterNotFoud = () => {
-    // if(this.state.filtreFamille && this.state.filtreContinent){
+    // if(!this.state.filtreFamille && !this.state.filtreContinent){
     //     console.log("je n'ai rien trouve comme filtre");
     // }  
     // }
