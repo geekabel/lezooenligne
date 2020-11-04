@@ -15,9 +15,9 @@ class APIManager extends Model
         if($idContinent !== -1) $whereClause .= "a.animal_id IN (
             select animal_id from animal_continent where continent_id = :idContinent
         )";
-        $req = "SELECT * 
+        $req = "SELECT a.animal_id,animal_nom,animal_description,animal_image,f.famille_id,famille_libelle,famille_description,c.continent_id,continent_libelle
       from animal a inner join famille f on f.famille_id = a.famille_id
-      inner join animal_continent ac on ac.animal_id = a.animal_id
+      left join animal_continent ac on ac.animal_id = a.animal_id
       inner join continent c on c.continent_id = ac.continent_id " .$whereClause;
 
         $stmt = $this->getBdd()->prepare($req);

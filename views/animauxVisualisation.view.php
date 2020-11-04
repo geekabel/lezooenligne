@@ -13,9 +13,10 @@
         <?php foreach ($animaux as $animal) : ?>
             <tr>
                 <td><?= $animal['animal_id'] ?></td>
-                <td><?= $animal['animal_nom'] ?></td>
+                <td><img src="<?= URL ?>public/images/<?= $animal['animal_image'] ?>" style="width:50px" alt="<?= $animal['animal_nom'] ?>" /></td>
+                <td class="align-middle"><?= $animal['animal_nom'] ?></td>
                 <td><?= $animal['animal_description'] ?></td>
-                <td><img src="<?= $animal['animal_images'] ?>" alt="par defaut"></td>
+                
                 <td>
                     <a href="<?= URL ?>/back/animaux/modification/<?= $animal['animal_id'] ?>" class="btn btn-warning">Modifier</a>
                 </td>

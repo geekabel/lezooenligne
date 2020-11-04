@@ -1,5 +1,6 @@
 <?php ob_start(); ?>
 <form method="POST" action="<?= URL ?>back/animaux/modificationValidation" enctype="multipart/form-data">
+ <input type="hidden" name="animal_id" value="<?= $animal['animal_id']?>" />
     <div class="form-group">
         <label for="animal_nom">Nom de l'animal</label>
         <input type="text" class="form-control" id="animal_nom" name="animal_nom" value="<?= $animal['animal_nom'] ?>">
@@ -9,15 +10,18 @@
         <textarea class="form-control" name="animal_description" id="animal_description" rows="3"><?= $animal['animal_description'] ?></textarea>
     </div>
     <div class="form-group">
+    <img src="<?= URL ?>public/images/<?= $animal['animal_image'] ?>" style="width:50px" />
         <label for="image">Image :</label>
         <input type="file" class="form-control-file" id="image" name="image">
     </div>
     <div class="form-group">
         <label for="image">Familles :</label>
-        <select class="form-control" name="famille_id" value="">
+        <select class="form-control" name="famille_id" >
             <option></option>
             <?php foreach ($familles as $famille) : ?>
-                <option value="<?= $famille['famille_id'] ?>" <?php if ($famille['famille_id'] === $animal['famille_id']) echo "selected"; ?>>
+                <option value="<?= $famille['famille_id'] ?>" 
+                <?php if ($famille['famille_id'] === $animal['famille_id']) echo "selected"; ?>
+                >
                     <?= $famille['famille_id'] ?> - <?= $famille['famille_libelle'] ?>
                 </option>
             <?php endforeach; ?>
@@ -28,10 +32,10 @@
         <?php foreach ($continents as $continent) : ?>
             <div class="form-group form-check col-2">
                 <input type="checkbox" class="form-check-input" id="continent" name="continent-<?= $continent['continent_id'] ?>" 
-                <?php if (in_array($continent['continent_id'], $tabContinents))
+                    <?php if (in_array($continent['continent_id'], $tabContinents))
                     echo "checked";    
                     ?>
-                    >
+                >
                 <label class="form-check-label" for="exampleCheck1"><?= $continent['continent_libelle'] ?></label>
             </div>
         <?php endforeach; ?>

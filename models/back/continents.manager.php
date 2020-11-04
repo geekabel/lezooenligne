@@ -25,4 +25,27 @@ class ContinentsManager extends Model
         $stmt->closeCursor();
         return $this->getBdd()->lastInsertId();
     }
+    public function deleteDBContinentAnimal($idAnimal, $idContinent)
+    {
+        $req = "DELETE from animal_continent where animal_id= :idAnimal and continent_id= :idContinent";
+        $stmt = $this->getBdd()->prepare($req);
+        $stmt->bindValue("idAnimal", $idAnimal, PDO::PARAM_INT);
+        $stmt->bindValue("idContinent", $idContinent, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->closeCursor();
+    }
+
+    public function verificationExisteAnimalContinent($idAnimal, $idContinent)
+    {
+        $req = "SELECT count(*) as 'nb' from animal_continent ac where 
+        ac.animal_id=:idAnimal and ac.continent_id= :idContinent";
+        $stmt = $this->getBdd()->prepare($req);
+        $stmt->bindValue("idAnimal", $idAnimal, PDO::PARAM_INT);
+        $stmt->bindValue("idContinent", $idContinent, PDO::PARAM_INT);
+        $stmt->execute();
+        $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        if ($resultat['nb'] >= 1) return true;
+        return false;
+    }
 }

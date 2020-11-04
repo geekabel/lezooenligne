@@ -17,7 +17,7 @@ class AnimauxManager extends Model
     }
     public function deleteDBAnimalContinent($idAnimal)
     {
-        $req = "DELETE FROM animal_continent WHERE animal_id = :idAnimal";
+        $req = "DELETE FROM animal_continent WHERE animal_id= :idAnimal";
         $stmt = $this->getBdd()->prepare($req);
         $stmt->bindValue("idAnimal", $idAnimal, PDO::PARAM_INT);
         $stmt->execute();
@@ -25,25 +25,27 @@ class AnimauxManager extends Model
     }
     public function deleteDBAnimal($idAnimal)
     {
-        $req = "DELETE FROM animal WHERE animal_id = :idAnimal";
+        $req = "DELETE FROM animal WHERE animal_id= :idAnimal";
         $stmt = $this->getBdd()->prepare($req);
         $stmt->bindValue("idAnimal", $idAnimal, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->closeCursor();
     }
+    public function updateAnimaux($idAnimal, $name, $description, $image, $familles)
+    {
+        $req = "UPDATE animal set animal_nom= :nom, animal_description= :description,
+         animal_image= :image,famille_id= :famille
+        where animal_id= :idAnimal";
+        $stmt = $this->getBdd()->prepare($req);
+        $stmt->bindValue("idAnimal", $idAnimal, PDO::PARAM_INT);
+        $stmt->bindValue("famille", $familles, PDO::PARAM_INT);
+        $stmt->bindValue("nom", $name, PDO::PARAM_STR);
+        $stmt->bindValue("description", $description, PDO::PARAM_STR);
+        $stmt->bindValue("image", $image, PDO::PARAM_STR);
+        $stmt->execute();
+        $stmt->closeCursor();
+    }
 
-
-    // public function updateFamille($idFamille, $libelle, $description)
-    // {
-    //     $req = "UPDATE famille set famille_libelle = :libelle, famille_description = :description 
-    //     where famille_id= :idFamille";
-    //     $stmt = $this->getBdd()->prepare($req);
-    //     $stmt->bindValue("idFamille", $idFamille, PDO::PARAM_INT);
-    //     $stmt->bindValue("libelle", $libelle, PDO::PARAM_STR);
-    //     $stmt->bindValue("description", $description, PDO::PARAM_STR);
-    //     $stmt->execute();
-    //     $stmt->closeCursor();
-    // }
 
     public function createAnimal($name, $description, $image, $familles)
     {
@@ -57,12 +59,16 @@ class AnimauxManager extends Model
         $stmt->closeCursor();
         return $this->getBdd()->lastInsertId();
     }
+    //j'ai eu une erreur ici du au fait qu'il n'arrive pas a distinguer le bon animal_id;
+    //Du coup , j'ai recuperé celle ci en selectectionnant de façon distinctes celle-ci
     public function getAnimal($idAnimal)
     {
-        $req = "SELECT * from animal a 
+        $req =
+            "SELECT a.animal_id,animal_nom,animal_description,animal_image,a.famille_id,continent_id 
+        from animal a 
         inner join famille f on a.famille_id=f.famille_id 
-        inner join animal_continent ac on ac.animal_id = a.animal_id 
-        where a.animal_id= :idAnimal";
+        left join animal_continent ac on ac.animal_id = a.animal_id 
+        where a.animal_id = :idAnimal";
         $stmt = $this->getBdd()->prepare($req);
         $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
         $stmt->execute();
@@ -71,18 +77,15 @@ class AnimauxManager extends Model
         return $lignesAnimal;
     }
 
-    public function updateAnimaux()
+    public function getImageAnimal($idAnimal)
     {
-        //     $req = "UPDATE animal set animal_nom = :nom, animal_description = :description, animal_image = :image,
-        //     where animal_id= :idAnimal";
-        //     $stmt = $this->getBdd()->prepare($req);
-        //     $stmt->bindValue("idAnimal", $idAnimal, PDO::PARAM_INT);
-        //     $stmt->bindValue("nom", $nom, PDO::PARAM_STR);
-        //     $stmt->bindValue("description", $description, PDO::PARAM_STR);
-        //     $stmt->bindValue("image", $image, PDO::PARAM_STR);
-        //     $stmt->bindValue("idFamille", $idFamille, PDO::PARAM_STR);
-        //     $stmt->execute();
-        //     $stmt->closeCursor();
+        $req = "SELECT animal_image FROM animal where animal_id=:idAnimal";
+        $stmt = $this->getBdd()->prepare($req);
+        $stmt->bindValue(":idAnimal", $idAnimal, PDO::PARAM_INT);
+        $stmt->execute();
+        $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $images['animal_image'];
     }
    
 }
