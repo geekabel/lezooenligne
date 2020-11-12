@@ -1,6 +1,6 @@
 # Règles à suivre
-- Un coup de [npm install] pour installer toutes les librairies.
-- Ensuite un coup de  `npm start` (pour tout ce qui l'utilise encore ) ou *yarn start run* (pour les connaisseurs)
+- Un coup de `npm install` pour installer toutes les librairies.
+- Ensuite un coup de  `npm start` (pour tout ce qui l'utilise encore ) ou `yarn start run` (pour les connaisseurs)
 - Et voila , tu peux t'amuser.
 
 ## Available Scripts
